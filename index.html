@@ -4,14 +4,31 @@
         <meta charset="utf-8">
         <title>NS App</title>
         <script data-main="js/main" src="js/require.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/styles.css"/>
     </head>
     <body>
-        <div id="search-station">
-            Zoek station: <input type="text" name="station-input" class="station-input">
+
+        <div id="stations">
+            <div id="search-station">
+                Zoek station: <input type="text" name="station-input" class="station-input">
+            </div>
+            <div id="station-results">
+                <ul class="stations">
+                </ul>
+            </div>
         </div>
-        <div id="station-results">
-            <ul class="stations">
-            </ul>
+
+        <div id="departures">
+
+            <table id="departures-table">
+                <tr>
+                    <th>Tijd</th>
+                    <th>Naar</th>
+                    <th>Spoor</th>
+                </tr>
+            </table>
+
         </div>
+
     </body>
 </html>
