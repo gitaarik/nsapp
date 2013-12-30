@@ -9,7 +9,7 @@ define(
         var instance = null;
 
         function Departures() {
-            this.callbacks = [];
+            this.callbacks = {};
             this.departures = {};
         }
 
@@ -46,7 +46,7 @@ define(
             if (station in this.callbacks) {
 
                 for (var key in this.callbacks[station]) {
-                    this.callbacks[station][key](this.departures);
+                    this.callbacks[station][key](this.departures[station]);
                 }
 
                 delete this.callbacks[station];
@@ -56,6 +56,7 @@ define(
         }
 
         Departures.prototype.getByCallback = function(station, callback) {
+
             if (station in this.departures) {
                 callback(this.departures[station]);
             } else {
@@ -65,8 +66,10 @@ define(
                 }
 
                 this.callbacks[station].push(callback);
+                this.getDepartures(station);
 
             }
+
         }
 
         Departures.getInstance = function() {

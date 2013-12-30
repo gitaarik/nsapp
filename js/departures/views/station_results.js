@@ -33,10 +33,7 @@ define(
         StationResults.prototype.updateStations = function(stations) {
 
             var stationsList = this.element.getElementsByClassName('stations')[0];
-
-            while (stationsList.hasChildNodes()) {
-                stationsList.removeChild(stationsList.lastChild);
-            }
+            stationsList.innerHTML = '';
 
             for (var key in stations) {
 
