@@ -4,9 +4,11 @@ body {
 }
 
 .header {
+    display: block;
+    height: 48px;
+    overflow: hidden;
     background: #000D66;
     text-align: center;
-    height: 48px;
 }
 
 .header h1 {
