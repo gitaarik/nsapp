@@ -10,6 +10,7 @@ define(
 
         function Departures() {
             this.success_callbacks = {};
+            this.failed_callbacks = {};
             this.departures = {};
         }
 
@@ -27,7 +28,10 @@ define(
 
                     if (this.status == 200) {
                         that.receivedDepartures(station, JSON.parse(this.responseText));
+                    } else if (this.status == 404) {
+                        that.failedToReceiveDepartures(station, 'not-found');
                     } else {
+                        console.log(request);
                         console.log("Failed to fetch departures. Response status: " + request.status);
                     }
 
@@ -55,6 +59,16 @@ define(
 
         }
 
+        Departures.prototype.failedToReceiveDepartures = function(station, error_code) {
+
+            for (var key in this.failed_callbacks[station]) {
+                this.failed_callbacks[station][key](error_code);
+            }
+
+            this.failed_callback = {};
+
+        }
+
         Departures.prototype.getByCallback = function(station, success_callback, failed_callback) {
 
             if (station in this.departures) {
@@ -63,6 +77,16 @@ define(
 
                 if (!(station in this.success_callbacks)) {
                     this.success_callbacks[station] = [];
+                }
+
+                if (failed_callback) {
+
+                    if(!(station in this.failed_callbacks)) {
+                        this.failed_callbacks[station] = [];
+                    }
+
+                    this.failed_callbacks[station].push(failed_callback);
+
                 }
 
                 this.success_callbacks[station].push(success_callback);

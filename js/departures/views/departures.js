@@ -13,14 +13,26 @@ define(
             var that = this;
             this.element = element;
             this.station = station;
+            this.departures_table = document.getElementById('departures-table');
+            this.departures_not_available = document.getElementById('departures-not-available');
 
-            Departures.getByCallback(this.station.code, function(departures) {
-                that.fillDeparturesTable(departures);
-            });
+            Departures.getByCallback(
+                this.station.code,
+                function(departures) {
+                    // success
+                    that.showDeparturesTable(departures);
+                },
+                function(error_code) {
+                    // failed
+                    that.showError(departures);
+                }
+            );
 
         }
 
-        DeparturesView.prototype.fillDeparturesTable = function(departures) {
+        DeparturesView.prototype.showDeparturesTable = function(departures) {
+
+            var that = this;
 
             function getDepartureTime(departure) {
 
@@ -140,9 +152,7 @@ define(
 
             function fillTable() {
 
-                var departures_table = document.getElementById('departures-table');
-                var table_body = departures_table.getElementsByTagName('tbody')[0];
-
+                var table_body = that.departures_table.getElementsByTagName('tbody')[0];
                 table_body.innerHTML = '';
 
                 for (var key in departures) {
@@ -164,8 +174,15 @@ define(
 
             }
 
+            this.departures_table.style.display = 'table';
+            this.departures_not_available.style.display = 'none';
             fillTable();
 
+        }
+
+        DeparturesView.prototype.showError = function(departures) {
+            this.departures_table.style.display = 'none';
+            this.departures_not_available.style.display = 'block';
         }
 
         return DeparturesView;

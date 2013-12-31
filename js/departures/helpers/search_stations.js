@@ -77,11 +77,6 @@ define(
                 return;
             }
 
-            if (!(this.station_names && this.stations)) {
-                // TODO: stations aren't fetched yet, display a loader image
-                // until stations are fetched and search can take place.
-            }
-
             // Remove duplicates AFTER sorting so that the duplicate
             // that had the best position will be preserved.
             this.callback(removeDuplicates(sortStations(this.search())));

@@ -134,3 +134,8 @@ body {
     color: #F00;
     font-weight: bold;
 }
+
+#departures-not-available {
+    padding: 20px;
+    text-align: center;
+}

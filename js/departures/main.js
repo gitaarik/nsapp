@@ -92,6 +92,8 @@ define(
             var that = this;
             this.stations_el.style.display = 'none';
 
+            // TODO: add loader and remove loader on callback.
+
             Stations.getByCallback(function(stations) {
 
                 function setHeaderName(station) {
