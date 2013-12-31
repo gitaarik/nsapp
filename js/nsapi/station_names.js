@@ -2,8 +2,10 @@
 
 define(
     [
+        'settings'
     ],
     function(
+        settings
     ) {
 
         var instance = null;
@@ -18,7 +20,7 @@ define(
             var that = this;
             var request = new XMLHttpRequest();
 
-            request.open('GET', 'http://localhost:8000/api/v1/stationnames/');
+            request.open('GET', settings.nsapi_base_url + '/api/v1/stationnames/');
             request.setRequestHeader('Accept', 'application/json');
 
             request.onreadystatechange = function() {
