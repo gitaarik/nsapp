@@ -67,6 +67,7 @@ body {
 
 #station-results {
     display: block;
+    overflow: hidden;
     list-style: none;
     padding: 0;
     margin: 0;
