@@ -52,7 +52,7 @@ define(
                 var time_column = document.createElement('td')
                 var departure_time_el = document.createElement('div');
 
-                departure_time_el.setAttribute('class', 'departure_time');
+                departure_time_el.setAttribute('class', 'departure-time');
                 departure_time_el.appendChild(document.createTextNode(
                     getDepartureTime(departure)
                 ));
@@ -127,7 +127,7 @@ define(
                     );
 
                     if (departure.vertrekspoor_gewijzigd) {
-                        platform_el.setAttribute('class', 'changed');
+                        platform_el.setAttribute('class', 'platform-changed');
                     }
 
                     platform_column.appendChild(platform_el);

@@ -47,15 +47,15 @@ define(
 
             this.back_button_el = document.getElementById('departures-back-button');
             this.stations_el = document.getElementById('stations');
-            this.search_station_el = document.getElementById('search-station');
+            this.search_station_input_el = document.getElementById('search-station-input');
             this.departures_el = document.getElementById('departures');
 
-            this.search_station_el.focus();
+            this.search_station_input_el.focus();
 
             this.stationResultsView = new StationResultsView(
                 document.getElementById('station-results')
             );
-            this.searchStationsView = new SearchStationsView(this.search_station_el);
+            this.searchStationsView = new SearchStationsView(this.search_station_input_el);
             this.searchStations = new SearchStations();
 
             this.stationResultsView.openStationDelegate = function(station_code) {
@@ -96,6 +96,7 @@ define(
 
                 function setHeaderName(station) {
                     var header_el = that.departures_el.getElementsByTagName('header')[0];
+                    header_el.innerHTML = '';
                     header_el.appendChild(document.createTextNode(station.name));
                 }
 
@@ -116,6 +117,7 @@ define(
             this.departures_el.style.display = 'none';
             this.back_button_el.style.display = 'none';
             this.stations_el.style.display = 'block';
+            this.search_station_input_el.focus();
         }
 
         return Departures;

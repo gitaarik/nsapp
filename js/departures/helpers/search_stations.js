@@ -51,23 +51,40 @@ define(
 
         SearchStations.prototype.getResults = function() {
 
+            function sortStations(stations) { 
+                return stations.sort(function(a, b) {
+                    return a.levenshtein - b.levenshtein;
+                });
+            }
+
+            function removeDuplicates(stations) {
+
+                var codes = [];
+
+                for (var key in stations) {
+                    var station = stations[key];
+                    if (codes.indexOf(station.code) > -1) {
+                        delete stations[key];
+                    }
+                    codes.push(station.code);
+                }
+
+                return stations;
+
+            }
+
             if (!this.isReady()) {
                 return;
             }
-
-            var matches = [];
 
             if (!(this.station_names && this.stations)) {
                 // TODO: stations aren't fetched yet, display a loader image
                 // until stations are fetched and search can take place.
             }
 
-            matches = this.search();
-            matches = matches.sort(function(a, b) {
-                return a.levenshtein - b.levenshtein;
-            });
-
-            this.callback(matches);
+            // Remove duplicates AFTER sorting so that the duplicate
+            // that had the best position will be preserved.
+            this.callback(removeDuplicates(sortStations(this.search())));
 
         }
 
@@ -116,22 +133,23 @@ define(
              */
             function getMatches() {
 
+                function addMatch(station) {
+                    matches.push({
+                        'code': code,
+                        'name': station.name,
+                        'levenshtein': levenshtein(that.search_term, name)
+                    });
+                }
+
                 var matches = [];
                 var regexes = getRegexes();
+                var matched_station_codes = [];
 
                 for (var name in that.station_names) {
 
                     if (matchStation(name, regexes)) {
-
                         var code = that.station_names[name];
-                        var station = that.stations[code];
-
-                        matches.push({
-                            'code': code,
-                            'name': station.name,
-                            'levenshtein': levenshtein(that.search_term, name)
-                        });
-
+                        addMatch(that.stations[code])
                     }
 
                 }

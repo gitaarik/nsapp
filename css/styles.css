@@ -51,7 +51,7 @@ body {
     padding: 20px 10px;
 }
 
-#search-station {
+#search-station-input {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -85,5 +85,52 @@ body {
 }
 
 #departures-table {
-    margin: 10px;
+    margin: 0px;
+    padding: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 16px;
+}
+
+#departures-table th,
+#departures-table td {
+    padding: 0 10px;
+}
+
+#departures-table thead th {
+    text-align: left;
+    line-height: 40px;
+    background: #000D66;
+    color: #FFF;
+    font-weight: normal;
+}
+
+#departures-table tbody td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+#departures-table .time,
+#departures-table .platform {
+    width: 45px;
+}
+
+#departures-table tbody tr:nth-child(2n) td {
+    background: #F2F2F7;
+}
+
+#departures-table tbody .delay {
+    font-size: 12px;
+}
+
+#departures-table tbody .train-type,
+#departures-table tbody .route-info {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+#departures-table tbody .platform-changed {
+    color: #F00;
+    font-weight: bold;
 }

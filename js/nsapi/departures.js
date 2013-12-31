@@ -9,7 +9,7 @@ define(
         var instance = null;
 
         function Departures() {
-            this.callbacks = {};
+            this.success_callbacks = {};
             this.departures = {};
         }
 
@@ -43,29 +43,29 @@ define(
 
             this.departures[station] = departures;
 
-            if (station in this.callbacks) {
+            if (station in this.success_callbacks) {
 
-                for (var key in this.callbacks[station]) {
-                    this.callbacks[station][key](this.departures[station]);
+                for (var key in this.success_callbacks[station]) {
+                    this.success_callbacks[station][key](this.departures[station]);
                 }
 
-                delete this.callbacks[station];
+                delete this.success_callbacks[station];
 
             }
 
         }
 
-        Departures.prototype.getByCallback = function(station, callback) {
+        Departures.prototype.getByCallback = function(station, success_callback, failed_callback) {
 
             if (station in this.departures) {
-                callback(this.departures[station]);
+                success_callback(this.departures[station]);
             } else {
 
-                if (!(station in this.callbacks)) {
-                    this.callbacks[station] = [];
+                if (!(station in this.success_callbacks)) {
+                    this.success_callbacks[station] = [];
                 }
 
-                this.callbacks[station].push(callback);
+                this.success_callbacks[station].push(success_callback);
                 this.getDepartures(station);
 
             }
