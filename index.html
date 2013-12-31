@@ -16,20 +16,20 @@
                 <h1>Vertrektijden</h1>
             </header>
 
-            <div id="departures-content">
+            <section id="stations">
 
-                <section id="stations">
+                <div class="search-station-container">
+                    <input type="text" id="search-station-input" placeholder="Zoek station">
+                </div>
 
-                    <div class="search-station-container">
-                        <input type="text" id="search-station-input" placeholder="Zoek station">
-                    </div>
+                <ul id="station-results"></ul>
 
-                    <ul id="station-results"></ul>
+            </section>
 
-                </section>
+            <section id="departures">
+                <header></header>
 
-                <section id="departures">
-                    <header></header>
+                <div id="departures-table-container">
                     <table id="departures-table">
                         <thead>
                             <tr>
@@ -40,12 +40,13 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                    <div id="departures-not-available">
-                        Geen vertrektijden beschikbaar voor dit station.
-                    </div>
-                </section>
+                </div>
 
-            </div>
+                <div id="departures-not-available">
+                    Geen vertrektijden beschikbaar voor dit station.
+                </div>
+
+            </section>
 
         </article>
 

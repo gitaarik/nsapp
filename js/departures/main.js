@@ -17,16 +17,8 @@ define(
     ) {
 
         function Departures() {
-            this.initContentHeight();
             this.initViews();
             this.initEventListeners();
-        }
-
-        Departures.prototype.initContentHeight = function() {
-            var content = document.getElementById('departures-content');
-            var viewport_height = document.documentElement.clientHeight;
-            var content_height = viewport_height - 48;
-            content.style.height = content_height + 'px';
         }
 
         Departures.prototype.initEventListeners = function() {
@@ -36,10 +28,6 @@ define(
             this.back_button_el.addEventListener('click', function() {
                 that.backButtonPressed();
             });
-
-            window.onresize = function() {
-                that.initContentHeight();
-            }
 
         }
 

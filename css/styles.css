@@ -6,9 +6,10 @@ body {
 .header {
     display: block;
     height: 48px;
-    overflow: hidden;
     background: #000D66;
     text-align: center;
+    position: fixed;
+    width: 100%;
 }
 
 .header h1 {
@@ -33,8 +34,8 @@ body {
     display: none;
 }
 
-#departures-content {
-    overflow: auto;
+#stations {
+    padding-top: 48px;
 }
 
 #stations header {
@@ -83,14 +84,21 @@ body {
 }
 
 #departures header {
+    position: fixed;
+    width: 100%;
+    top: 48px;
     background: #FFCC33;
     font-size: 20px;
     padding: 10px;
     text-align: center;
 }
 
+#departures-table-container {
+    padding-top: 90px;
+}
+
 #departures-table {
-    margin: 0px;
+    margin: 0;
     padding: 0;
     border-spacing: 0;
     border-collapse: collapse;
