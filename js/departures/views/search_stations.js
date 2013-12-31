@@ -14,9 +14,8 @@ define(
         SearchStationsView.prototype.initEventListeners = function() {
 
             var that = this;
-            this.stationInputEl = this.element.getElementsByClassName('station-input')[0];
 
-            this.stationInputEl.addEventListener('keyup', function() {
+            this.element.addEventListener('keyup', function() {
                 that.searchTermUpdatedDelegate(this.value);
             });
 

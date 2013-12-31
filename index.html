@@ -8,27 +8,42 @@
     </head>
     <body>
 
-        <div id="stations">
-            <div id="search-station">
-                Zoek station: <input type="text" name="station-input" class="station-input">
+        <article id="departures-container">
+
+            <header class="header">
+                <div id="departures-back-button">&lt;</div>
+                <h1>Vertrektijden</h1>
+            </header>
+
+            <div id="departures-content">
+
+                <section id="stations">
+
+                    <div class="search-station-container">
+                        <input type="text" id="search-station" placeholder="Zoek station">
+                    </div>
+
+                    <ul id="station-results"></ul>
+
+                </section>
+
+                <section id="departures">
+                    <header></header>
+                    <table id="departures-table">
+                        <thead>
+                            <tr>
+                                <th>Tijd</th>
+                                <th>Naar</th>
+                                <th>Spoor</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+
             </div>
-            <div id="station-results">
-                <ul class="stations">
-                </ul>
-            </div>
-        </div>
 
-        <div id="departures">
-
-            <table id="departures-table">
-                <tr>
-                    <th>Tijd</th>
-                    <th>Naar</th>
-                    <th>Spoor</th>
-                </tr>
-            </table>
-
-        </div>
+        </article>
 
     </body>
 </html>

@@ -14,9 +14,8 @@ define(
         StationResults.prototype.initEventListeners = function() {
 
             var that = this;
-            var stationList = this.element.getElementsByClassName('stations')[0];
 
-            stationList.addEventListener('click', function(event) {
+            this.element.addEventListener('click', function(event) {
                 that.handleStationListClick(event);
             });
 
@@ -32,8 +31,7 @@ define(
 
         StationResults.prototype.updateStations = function(stations) {
 
-            var stationsList = this.element.getElementsByClassName('stations')[0];
-            stationsList.innerHTML = '';
+            this.element.innerHTML = '';
 
             for (var key in stations) {
 
@@ -44,7 +42,8 @@ define(
                 stationEl.setAttribute('data-code', station.code);
                 stationEl.setAttribute('class', 'station-option');
                 stationEl.appendChild(name);
-                stationsList.appendChild(stationEl);
+
+                this.element.appendChild(stationEl);
 
             }
 

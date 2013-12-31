@@ -1,3 +1,89 @@
+body {
+    margin: 0;
+    font-family: arial, sans-serif;
+}
+
+.header {
+    background: #000D66;
+    text-align: center;
+    height: 48px;
+    padding: 0 10px;
+}
+
+.header h1 {
+    margin: 0;
+    padding: 0;
+    line-height: 48px;
+    font-size: 20px;
+    font-weight: normal;
+    color: #FFF;
+}
+
+#departures-back-button {
+    display: none;
+    position: absolute;
+    color: white;
+    font-size: 30px;
+    line-height: 48px;
+}
+
 #departures {
     display: none;
+}
+
+#departures-content {
+    overflow: auto;
+}
+
+#stations header {
+    text-align: left;
+    padding: 5px 10px;
+}
+
+#stations header h2 {
+    margin: 0;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#stations .search-station-container {
+    padding: 20px 10px;
+}
+
+#search-station {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    font-size: 18px;
+    color: #777;
+}
+
+#station-results {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#station-results li {
+    padding: 20px 10px;
+    display: block;
+    font-size: 20px;
+    color: #000D66;
+}
+
+#station-results li:nth-child(2n+1) {
+    background: #F2F2F7;
+}
+
+#departures header {
+    background: #FFCC33;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+#departures-table {
+    margin: 10px;
 }

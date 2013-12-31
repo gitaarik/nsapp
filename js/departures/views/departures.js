@@ -115,17 +115,24 @@ define(
             function getPlatformColumn(departure) {
 
                 var platform_column = document.createElement('td');
-                var platform_el = document.createElement('div');
 
-                platform_el.appendChild(
-                    document.createTextNode(departure.vertrekspoor)
-                );
+                if (departure.vertrekspoor) {
+                    // Sometimes buses are listed in the departures,
+                    // they don't have platforms.
 
-                if (departure.vertrekspoor_gewijzigd) {
-                    platform_el.setAttribute('class', 'changed');
+                    var platform_el = document.createElement('div');
+
+                    platform_el.appendChild(
+                        document.createTextNode(departure.vertrekspoor)
+                    );
+
+                    if (departure.vertrekspoor_gewijzigd) {
+                        platform_el.setAttribute('class', 'changed');
+                    }
+
+                    platform_column.appendChild(platform_el);
+
                 }
-
-                platform_column.appendChild(platform_el);
 
                 return platform_column;
 
@@ -134,6 +141,9 @@ define(
             function fillTable() {
 
                 var departures_table = document.getElementById('departures-table');
+                var table_body = departures_table.getElementsByTagName('tbody')[0];
+
+                table_body.innerHTML = '';
 
                 for (var key in departures) {
 
@@ -148,7 +158,7 @@ define(
                     row.appendChild(to_column);
                     row.appendChild(platform_column);
 
-                    departures_table.appendChild(row);
+                    table_body.appendChild(row);
 
                 }
 

@@ -20,7 +20,7 @@ define(
             this.station_names = null;
             this.stations = null;
             this.callback = null;
-            this.searchTerm = null;
+            this.search_term = null;
 
             StationNames.getByCallback(function(station_names) {
                 that.station_names = station_names;
@@ -38,14 +38,14 @@ define(
             return (
                 this.station_names !== null &&
                 this.stations !== null &&
-                this.searchTerm !== null &&
+                this.search_term !== null &&
                 this.callback !== null
             );
         }
 
-        SearchStations.prototype.getByCallback = function(searchTerm, callback) {
+        SearchStations.prototype.getByCallback = function(search_term, callback) {
             this.callback = callback;
-            this.searchTerm = searchTerm;
+            this.search_term = search_term;
             this.getResults();
         }
 
@@ -82,11 +82,11 @@ define(
             function getRegexes() {
 
                 var regexes = [];
-                var searchWords = that.searchTerm.split(' ');
+                var search_words = that.search_term.split(' ');
 
-                for (var word in searchWords) {
+                for (var word in search_words) {
                     regexes.push(
-                        new RegExp(escape_regex(searchWords[word]), 'i')
+                        new RegExp(escape_regex(search_words[word]), 'i')
                     );
                 }
 
@@ -112,7 +112,7 @@ define(
             }
 
             /**
-             * Returns the matches for the searchTerm.
+             * Returns the matches for the search_term.
              */
             function getMatches() {
 
@@ -129,7 +129,7 @@ define(
                         matches.push({
                             'code': code,
                             'name': station.name,
-                            'levenshtein': levenshtein(that.searchTerm, name)
+                            'levenshtein': levenshtein(that.search_term, name)
                         });
 
                     }
