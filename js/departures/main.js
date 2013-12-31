@@ -96,6 +96,7 @@ define(
 
                 that.departures_el.style.display = 'block';
                 that.back_button_el.style.display = 'block';
+                scroll(0, 0);
 
                 setHeaderName(station);
 
