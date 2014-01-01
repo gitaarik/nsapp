@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>NS App</title>
+        <script>
+            var manifestUrl = 'nsapp.televisionsmostpopularartinstructors.com/manifest.webapp';
+            var request = window.navigator.mozApps.install(manifestUrl);
+            request.onsuccess = function () {
+                // Save the App object that is returned
+                var appRecord = this.result;
+                alert('Installation successful!');
+            };
+            request.onerror = function () {
+                // Display the error information from the DOMError object
+                alert('Install failed, error: ' + this.error.name);
+            };
+        </script>
+    </head>
+    <body>
+        installing...
+    </body>
+</html>
