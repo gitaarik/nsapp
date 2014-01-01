@@ -8,8 +8,6 @@ body {
     height: 48px;
     background: #000D66;
     text-align: center;
-    position: fixed;
-    width: 100%;
 }
 
 .header h1 {
@@ -34,10 +32,6 @@ body {
     display: none;
 }
 
-#stations {
-    padding-top: 48px;
-}
-
 #stations header {
     text-align: left;
     padding: 5px 10px;
@@ -52,6 +46,7 @@ body {
 
 #stations .search-station-container {
     padding: 20px 10px;
+    border-bottom: 1px #DDD solid;
 }
 
 #search-station-input {
@@ -67,7 +62,7 @@ body {
 
 #station-results {
     display: block;
-    overflow: hidden;
+    overflow: auto;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -85,20 +80,33 @@ body {
 }
 
 #departures header {
-    position: fixed;
-    width: 100%;
-    top: 48px;
     background: #FFCC33;
     font-size: 20px;
     padding: 10px;
     text-align: center;
 }
 
-#departures-table-container {
-    padding-top: 90px;
+#departures-table-header th {
+    text-align: left;
+    line-height: 40px;
+    background: #000D66;
+    color: #FFF;
+    font-weight: normal;
 }
 
-#departures-table {
+#departures-table-container {
+    overflow: auto;
+}
+
+#departures-table-header .time,
+#departures-table-header .platform,
+#departures-table .time,
+#departures-table .platform {
+    width: 45px;
+}
+
+#departures-table,
+#departures-table-header {
     margin: 0;
     padding: 0;
     border-spacing: 0;
@@ -108,26 +116,15 @@ body {
 }
 
 #departures-table th,
-#departures-table td {
+#departures-table td,
+#departures-table-header th,
+#departures-table-header td {
     padding: 0 10px;
-}
-
-#departures-table thead th {
-    text-align: left;
-    line-height: 40px;
-    background: #000D66;
-    color: #FFF;
-    font-weight: normal;
 }
 
 #departures-table tbody td {
     padding: 10px;
     vertical-align: top;
-}
-
-#departures-table .time,
-#departures-table .platform {
-    width: 45px;
 }
 
 #departures-table tbody tr:nth-child(2n) td {
@@ -150,6 +147,7 @@ body {
 }
 
 #departures-not-available {
+    display: none;
     padding: 20px;
     text-align: center;
 }

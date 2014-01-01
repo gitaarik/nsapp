@@ -18,7 +18,53 @@ define(
 
         function Departures() {
             this.initViews();
+            this.setContentHeight();
             this.initEventListeners();
+        }
+
+        Departures.prototype.initViews = function() {
+
+            var that = this;
+
+            this.back_button_el = document.getElementById('departures-back-button');
+            this.stations_el = document.getElementById('stations');
+            this.search_station_input_el = document.getElementById('search-station-input');
+            this.station_results_el = document.getElementById('station-results');
+            this.departures_el = document.getElementById('departures');
+
+            this.search_station_input_el.focus();
+
+            this.stationResultsView = new StationResultsView(this.station_results_el);
+            this.searchStationsView = new SearchStationsView(this.search_station_input_el);
+            this.searchStations = new SearchStations();
+
+            this.stationResultsView.openStationDelegate = function(station_code) {
+                that.showDepartures(station_code);
+            }
+
+            this.searchStationsView.searchTermUpdatedDelegate = function(search_term) {
+                that.showStationResults(search_term);
+            }
+
+        }
+
+        Departures.prototype.setContentHeight = function() {
+
+            var viewport_height = document.documentElement.clientHeight;
+
+            if(this.stations_el.style.display == 'none') {
+                var departures_table_container = document.getElementById('departures-table-container');
+                departures_table_container.style.height = (
+                    (viewport_height - departures_table_container.offsetTop)
+                    + 'px'
+                );
+            } else {
+                this.station_results_el.style.height = (
+                    (viewport_height - this.station_results_el.offsetTop)
+                    + 'px'
+                );
+            }
+
         }
 
         Departures.prototype.initEventListeners = function() {
@@ -29,31 +75,8 @@ define(
                 that.backButtonPressed();
             });
 
-        }
-
-        Departures.prototype.initViews = function() {
-
-            var that = this;
-
-            this.back_button_el = document.getElementById('departures-back-button');
-            this.stations_el = document.getElementById('stations');
-            this.search_station_input_el = document.getElementById('search-station-input');
-            this.departures_el = document.getElementById('departures');
-
-            this.search_station_input_el.focus();
-
-            this.stationResultsView = new StationResultsView(
-                document.getElementById('station-results')
-            );
-            this.searchStationsView = new SearchStationsView(this.search_station_input_el);
-            this.searchStations = new SearchStations();
-
-            this.stationResultsView.openStationDelegate = function(station_code) {
-                that.showDepartures(station_code);
-            }
-
-            this.searchStationsView.searchTermUpdatedDelegate = function(search_term) {
-                that.showStationResults(search_term);
+            window.onresize = function() {
+                that.setContentHeight();
             }
 
         }
@@ -96,11 +119,12 @@ define(
 
                 that.departures_el.style.display = 'block';
                 that.back_button_el.style.display = 'block';
-                scroll(0, 0);
-
                 setHeaderName(station);
 
                 new DeparturesView(that.departures_el, station);
+
+                scroll(0, 0);
+                that.setContentHeight();
 
             });
 
@@ -110,6 +134,7 @@ define(
             this.departures_el.style.display = 'none';
             this.back_button_el.style.display = 'none';
             this.stations_el.style.display = 'block';
+            this.setContentHeight();
             this.search_station_input_el.focus();
         }
 
