@@ -1,5 +1,3 @@
-'use strict';
-
 define(
     [
         'nsapi/departures'
@@ -7,50 +5,37 @@ define(
     function(
         Departures
     ) {
+        'use strict';
 
-        function DeparturesView(element, station) {
-
-            var that = this;
+        function DeparturesTableView(element, departures) {
             this.element = element;
-            this.station = station;
+            this.departures = departures;
             this.departures_table_container = document.getElementById('departures-table-container'); 
             this.departures_table_body = document.getElementById('departures-table-body');
             this.departures_not_available = document.getElementById('departures-not-available');
             this.departures_table_body_container = document.getElementById('departures-table-body-container');
-
-            Departures.getByCallback(
-                this.station.code,
-                function(departures) {
-                    // success
-                    that.showDeparturesTable(departures);
-                },
-                function(error_code) {
-                    // failed
-                    that.showError(departures);
-                }
-            );
-
-            this.setContentHeight();
-            this.initEventListeners();
-
         }
 
-        DeparturesView.prototype.initEventListeners = function() {
+        DeparturesTableView.prototype.activate = function() {
+            this.showDeparturesTable();
+            this.setContentHeight();
+            this.initEventListeners();
+        };
+
+        DeparturesTableView.prototype.initEventListeners = function() {
             var that = this;
             window.addEventListener('resize', function(event) {
                 that.setContentHeight();
             });
-        }
+        };
 
-
-        DeparturesView.prototype.setContentHeight = function() {
+        DeparturesTableView.prototype.setContentHeight = function() {
             this.departures_table_body_container.style.height = 
                 (document.documentElement.clientHeight -
-                 this.departures_table_body_container.offsetTop)
-                + 'px';
-        }
+                 this.departures_table_body_container.offsetTop) + 'px';
+        };
 
-        DeparturesView.prototype.showDeparturesTable = function(departures) {
+        DeparturesTableView.prototype.showDeparturesTable = function() {
 
             var that = this;
 
@@ -81,7 +66,7 @@ define(
 
             function getTimeColumn(departure) {
 
-                var time_column = document.createElement('td')
+                var time_column = document.createElement('td');
                 var departure_time_el = document.createElement('div');
 
                 departure_time_el.setAttribute('class', 'departure-time');
@@ -179,10 +164,9 @@ define(
                 var table_body = that.departures_table_body;
                 table_body.innerHTML = '';
 
-                for (var key in departures) {
+                for (var key in that.departures) {
 
-                    var departure = departures[key];
-
+                    var departure = that.departures[key];
                     var time_column = getTimeColumn(departure);
                     var to_column = getToColumn(departure);
                     var platform_column = getPlatformColumn(departure);
@@ -203,14 +187,9 @@ define(
             this.departures_not_available.style.display = 'none';
             fillTable();
 
-        }
+        };
 
-        DeparturesView.prototype.showError = function(departures) {
-            this.departures_table_container.style.display = 'none';
-            this.departures_not_available.style.display = 'block';
-        }
-
-        return DeparturesView;
+        return DeparturesTableView;
 
     }
 );

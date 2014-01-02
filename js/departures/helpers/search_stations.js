@@ -1,5 +1,3 @@
-'use strict';
-
 define(
     [
         'nsapi/station_names',
@@ -13,6 +11,7 @@ define(
         escape_regex,
         levenshtein
     ) {
+        'use strict';
 
         function SearchStations(element) {
 
@@ -41,13 +40,13 @@ define(
                 this.search_term !== null &&
                 this.callback !== null
             );
-        }
+        };
 
         SearchStations.prototype.getByCallback = function(search_term, callback) {
             this.callback = callback;
             this.search_term = search_term;
             this.getResults();
-        }
+        };
 
         SearchStations.prototype.getResults = function() {
 
@@ -81,7 +80,7 @@ define(
             // that had the best position will be preserved.
             this.callback(removeDuplicates(sortStations(this.search())));
 
-        }
+        };
 
         SearchStations.prototype.search = function() {
 
@@ -144,7 +143,7 @@ define(
 
                     if (matchStation(name, regexes)) {
                         var code = that.station_names[name];
-                        addMatch(that.stations[code])
+                        addMatch(that.stations[code]);
                     }
 
                 }
@@ -155,7 +154,7 @@ define(
 
             return getMatches();
 
-        }
+        };
 
         return SearchStations;
 

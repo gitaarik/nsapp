@@ -1,5 +1,3 @@
-'use strict';
-
 define(
     [
         'settings'
@@ -7,6 +5,7 @@ define(
     function(
         settings
     ) {
+        'use strict';
 
         var instance = null;
 
@@ -43,7 +42,7 @@ define(
 
             request.send();
 
-        }
+        };
 
         Departures.prototype.receivedDepartures = function(station, departures) {
 
@@ -59,7 +58,7 @@ define(
 
             }
 
-        }
+        };
 
         Departures.prototype.failedToReceiveDepartures = function(station, error_code) {
 
@@ -69,7 +68,7 @@ define(
 
             this.failed_callback = {};
 
-        }
+        };
 
         Departures.prototype.getByCallback = function(station, success_callback, failed_callback) {
 
@@ -96,14 +95,14 @@ define(
 
             }
 
-        }
+        };
 
         Departures.getInstance = function() {
              if (instance === null) {
                  instance = new Departures();
              }
              return instance;
-        }
+        };
 
         return Departures.getInstance();
 

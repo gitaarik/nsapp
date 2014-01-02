@@ -1,5 +1,3 @@
-'use strict';
-
 define(
     [
         'settings'
@@ -7,6 +5,7 @@ define(
     function(
         settings
     ) {
+        'use strict';
 
         var instance = null;
 
@@ -39,7 +38,7 @@ define(
 
             request.send();
 
-        }
+        };
 
         Stations.prototype.receivedStations = function(stations) {
 
@@ -55,7 +54,7 @@ define(
 
             }
 
-        }
+        };
 
         Stations.prototype.getByCallback = function(callback) {
 
@@ -66,14 +65,14 @@ define(
                 callback(this.stations);
             }
 
-        }
+        };
 
         Stations.getInstance = function() {
              if (instance === null) {
                  instance = new Stations();
              }
              return instance;
-        }
+        };
 
         return Stations.getInstance();
 

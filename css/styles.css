@@ -32,19 +32,19 @@ body {
     display: none;
 }
 
-#stations header {
+#search-stations header {
     text-align: left;
     padding: 5px 10px;
 }
 
-#stations header h2 {
+#search-stations header h2 {
     margin: 0;
     color: #FFF;
     font-size: 16px;
     font-weight: normal;
 }
 
-#stations .search-station-container {
+#search-stations .search-station-input-container {
     padding: 20px 10px;
     border-bottom: 1px #DDD solid;
 }

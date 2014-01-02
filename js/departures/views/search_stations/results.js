@@ -1,18 +1,17 @@
-'use strict';
-
 define(
     [
     ],
     function(
     ) {
+        'use strict';
 
-        function StationResults(element) {
+        function SearchStationsResults(element) {
             this.element = element;
             this.setContentHeight();
             this.initEventListeners();
         }
 
-        StationResults.prototype.initEventListeners = function() {
+        SearchStationsResults.prototype.initEventListeners = function() {
 
             var that = this;
 
@@ -22,26 +21,25 @@ define(
 
             window.addEventListener('resize', function(event) {
                 that.setContentHeight();
-            })
+            });
 
-        }
+        };
 
-        StationResults.prototype.setContentHeight = function() {
+        SearchStationsResults.prototype.setContentHeight = function() {
             this.element.style.height = 
                 (document.documentElement.clientHeight -
-                 this.element.offsetTop)
-                + 'px';
-        }
+                 this.element.offsetTop) + 'px';
+        };
 
-        StationResults.prototype.handleStationListClick = function(event) {
+        SearchStationsResults.prototype.handleStationListClick = function(event) {
 
             if (event.target.className == 'station-option') {
-                this.openStationDelegate(event.target.getAttribute('data-code'));
+                this.openStationDelegate(event.target.station);
             }
 
-        }
+        };
 
-        StationResults.prototype.updateStations = function(stations) {
+        SearchStationsResults.prototype.updateStations = function(stations) {
 
             this.element.innerHTML = '';
 
@@ -51,7 +49,7 @@ define(
                 var stationEl = document.createElement('li');
                 var name = document.createTextNode(station.name);
 
-                stationEl.setAttribute('data-code', station.code);
+                stationEl.station = station;
                 stationEl.setAttribute('class', 'station-option');
                 stationEl.appendChild(name);
 
@@ -59,9 +57,9 @@ define(
 
             }
 
-        }
+        };
 
-        return StationResults;
+        return SearchStationsResults;
 
     }
 );

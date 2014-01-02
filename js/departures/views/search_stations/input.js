@@ -1,17 +1,16 @@
-'use strict';
-
 define(
     [
     ],
     function(
     ) {
+        'use strict';
 
-        function SearchStationsView(element) {
+        function SearchStationsInputView(element) {
             this.element = element;
             this.initEventListeners();
         }
 
-        SearchStationsView.prototype.initEventListeners = function() {
+        SearchStationsInputView.prototype.initEventListeners = function() {
 
             var that = this;
 
@@ -19,9 +18,9 @@ define(
                 that.searchTermUpdatedDelegate(this.value);
             });
 
-        }
+        };
 
-        return SearchStationsView;
+        return SearchStationsInputView;
 
     }
 );
