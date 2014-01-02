@@ -11,17 +11,18 @@ define(
 
         function Departures() {
             this.initViews();
-            this.initEventListeners();
+            this.addEventListeners();
         }
 
         Departures.prototype.initViews = function() {
-
-            var that = this;
-
             this.back_button_el = document.getElementById('departures-back-button');
             this.search_stations_el = document.getElementById('search-stations');
             this.departures_el = document.getElementById('departures');
+        };
 
+        Departures.prototype.activate = function() {
+
+            var that = this;
             this.searchStationsView = new SearchStationsView(this.search_stations_el);
 
             this.searchStationsView.openStationDelegate = function(station) {
@@ -32,14 +33,25 @@ define(
 
         };
 
-        Departures.prototype.initEventListeners = function() {
+        Departures.prototype.deactivate = function() {
+            this.searchStationsView.deactivate();
+            this.removeEventListeners();
+        };
+
+        Departures.prototype.addEventListeners = function() {
 
             var that = this;
 
-            this.back_button_el.addEventListener('click', function() {
+            this.backButtonClickEvent = function() {
                 that.backButtonPressed();
-            });
+            };
 
+            this.back_button_el.addEventListener('click', this.backButtonClickEvent);
+
+        };
+
+        Departures.prototype.removeEventListeners = function() {
+            this.back_button_el.removeEventListener('click', this.backButtonClickEvent);
         };
 
         Departures.prototype.showDepartures = function(station) {
