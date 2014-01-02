@@ -29,7 +29,6 @@ define(
         DeparturesTableView.prototype.addEventListeners = function() {
             var that = this;
             this.resizeEvent = function(event) {
-                console.log('ja zors');
                 that.setContentHeight();
             };
             window.addEventListener('resize', this.resizeEvent);

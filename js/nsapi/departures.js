@@ -32,7 +32,6 @@ define(
                     } else if (this.status == 404) {
                         that.failedToReceiveDepartures(station, 'not-found');
                     } else {
-                        console.log(request);
                         console.log("Failed to fetch departures. Response status: " + request.status);
                     }
 
