@@ -16,6 +16,7 @@ define(
             this.departures_table_container = document.getElementById('departures-table-container'); 
             this.departures_table_body = document.getElementById('departures-table-body');
             this.departures_not_available = document.getElementById('departures-not-available');
+            this.departures_table_body_container = document.getElementById('departures-table-body-container');
 
             Departures.getByCallback(
                 this.station.code,
@@ -29,6 +30,24 @@ define(
                 }
             );
 
+            this.setContentHeight();
+            this.initEventListeners();
+
+        }
+
+        DeparturesView.prototype.initEventListeners = function() {
+            var that = this;
+            window.addEventListener('resize', function(event) {
+                that.setContentHeight();
+            });
+        }
+
+
+        DeparturesView.prototype.setContentHeight = function() {
+            this.departures_table_body_container.style.height = 
+                (document.documentElement.clientHeight -
+                 this.departures_table_body_container.offsetTop)
+                + 'px';
         }
 
         DeparturesView.prototype.showDeparturesTable = function(departures) {
@@ -179,7 +198,8 @@ define(
 
             }
 
-            this.departures_table_container.style.display = 'table';
+            this.departures_table_container.style.display = 'block';
+            this.departures_table_body_container.scrollTop = 0;
             this.departures_not_available.style.display = 'none';
             fillTable();
 

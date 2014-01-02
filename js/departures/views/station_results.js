@@ -8,6 +8,7 @@ define(
 
         function StationResults(element) {
             this.element = element;
+            this.setContentHeight();
             this.initEventListeners();
         }
 
@@ -19,6 +20,17 @@ define(
                 that.handleStationListClick(event);
             });
 
+            window.addEventListener('resize', function(event) {
+                that.setContentHeight();
+            })
+
+        }
+
+        StationResults.prototype.setContentHeight = function() {
+            this.element.style.height = 
+                (document.documentElement.clientHeight -
+                 this.element.offsetTop)
+                + 'px';
         }
 
         StationResults.prototype.handleStationListClick = function(event) {
