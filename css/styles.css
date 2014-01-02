@@ -94,19 +94,19 @@ body {
     font-weight: normal;
 }
 
-#departures-table-container {
+#departures-table-body-container {
     overflow: auto;
 }
 
 #departures-table-header .time,
 #departures-table-header .platform,
-#departures-table .time,
-#departures-table .platform {
+#departures-table-body .time,
+#departures-table-body .platform {
     width: 45px;
 }
 
-#departures-table,
-#departures-table-header {
+#departures-table-header,
+#departures-table-body {
     margin: 0;
     padding: 0;
     border-spacing: 0;
@@ -115,33 +115,30 @@ body {
     font-size: 16px;
 }
 
-#departures-table th,
-#departures-table td,
-#departures-table-header th,
-#departures-table-header td {
+#departures-table-header th {
     padding: 0 10px;
 }
 
-#departures-table tbody td {
+#departures-table-body td {
     padding: 10px;
     vertical-align: top;
 }
 
-#departures-table tbody tr:nth-child(2n) td {
+#departures-table-body tr:nth-child(2n) td {
     background: #F2F2F7;
 }
 
-#departures-table tbody .delay {
+#departures-table-body .delay {
     font-size: 12px;
 }
 
-#departures-table tbody .train-type,
-#departures-table tbody .route-info {
+#departures-table-body .train-type,
+#departures-table-body .route-info {
     font-size: 12px;
     margin-top: 5px;
 }
 
-#departures-table tbody .platform-changed {
+#departures-table-body .platform-changed {
     color: #F00;
     font-weight: bold;
 }

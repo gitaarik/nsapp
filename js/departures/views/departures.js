@@ -13,7 +13,7 @@ define(
             var that = this;
             this.element = element;
             this.station = station;
-            this.departures_table = document.getElementById('departures-table');
+            this.departures_table_body = document.getElementById('departures-table-body');
             this.departures_not_available = document.getElementById('departures-not-available');
 
             Departures.getByCallback(
@@ -69,6 +69,7 @@ define(
                     getDepartureTime(departure)
                 ));
 
+                time_column.setAttribute('class', 'time');
                 time_column.appendChild(departure_time_el);
 
                 if (departure.vertrekvertragingtekst) {
@@ -104,6 +105,7 @@ define(
                     document.createTextNode(departure.treinsoort)
                 );
 
+                to_column.setAttribute('class', 'to');
                 to_column.appendChild(destination_el);
                 to_column.appendChild(train_type_el);
 
@@ -127,6 +129,8 @@ define(
             function getPlatformColumn(departure) {
 
                 var platform_column = document.createElement('td');
+
+                platform_column.setAttribute('class', 'platform');
 
                 if (departure.vertrekspoor) {
                     // Sometimes buses are listed in the departures,
@@ -152,7 +156,7 @@ define(
 
             function fillTable() {
 
-                var table_body = that.departures_table.getElementsByTagName('tbody')[0];
+                var table_body = that.departures_table_body;
                 table_body.innerHTML = '';
 
                 for (var key in departures) {
@@ -174,14 +178,14 @@ define(
 
             }
 
-            this.departures_table.style.display = 'table';
+            this.departures_table_body.style.display = 'table';
             this.departures_not_available.style.display = 'none';
             fillTable();
 
         }
 
         DeparturesView.prototype.showError = function(departures) {
-            this.departures_table.style.display = 'none';
+            this.departures_table_body.style.display = 'none';
             this.departures_not_available.style.display = 'block';
         }
 

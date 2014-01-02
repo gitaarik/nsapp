@@ -53,16 +53,15 @@ define(
             var viewport_height = document.documentElement.clientHeight;
 
             if(this.stations_el.style.display == 'none') {
-                var departures_table_container = document.getElementById('departures-table-container');
-                departures_table_container.style.height = (
-                    (viewport_height - departures_table_container.offsetTop)
-                    + 'px'
-                );
+                var departures_table_body_container = 
+                    document.getElementById('departures-table-body-container');
+                departures_table_body_container.style.height = 
+                    (viewport_height - departures_table_body_container.offsetTop)
+                    + 'px';
             } else {
-                this.station_results_el.style.height = (
+                this.station_results_el.style.height = 
                     (viewport_height - this.station_results_el.offsetTop)
-                    + 'px'
-                );
+                    + 'px';
             }
 
         }
