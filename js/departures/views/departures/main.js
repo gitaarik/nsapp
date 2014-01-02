@@ -29,10 +29,12 @@ define(
                 this.station.code,
                 function(departures) {
                     // success
+                    that.success = true;
                     that.showDeparturesTable(departures);
                 },
                 function(error_code) {
                     // failed
+                    that.success = false;
                     that.showError(departures);
                 }
             );
@@ -43,7 +45,13 @@ define(
         };
 
         DeparturesView.prototype.deactivate = function() {
+
             this.element.style.display = 'none';
+
+            if (this.success) {
+                this.departuresTableView.deactivate();
+            }
+
         };
 
         DeparturesView.prototype.showDeparturesTable = function(departures) {

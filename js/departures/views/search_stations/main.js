@@ -27,18 +27,19 @@ define(
             this.searchStationsResultsView.openStationDelegate = function(station) {
                 that.openStationDelegate(station);
             };
+            this.searchStationsResultsView.activate();
 
             this.searchStationsInputView = new SearchStationsInputView(this.search_station_input_el);
             this.searchStationsInputView.searchTermUpdatedDelegate = function(search_term) {
                 that.showStationResults(search_term);
             };
-
-            this.searchStationsResultsView.setContentHeight();
-            this.search_station_input_el.focus();
+            this.searchStationsInputView.activate();
 
         };
 
         SearchStationsView.prototype.deactivate = function() {
+            this.searchStationsResultsView.deactivate();
+            this.searchStationsInputView.deactivate();
             this.element.style.display = 'none';
         };
 

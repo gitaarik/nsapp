@@ -7,17 +7,24 @@ define(
 
         function SearchStationsInputView(element) {
             this.element = element;
-            this.initEventListeners();
         }
 
-        SearchStationsInputView.prototype.initEventListeners = function() {
+        SearchStationsInputView.prototype.activate = function() {
 
             var that = this;
 
-            this.element.addEventListener('keyup', function() {
-                that.searchTermUpdatedDelegate(this.value);
-            });
+            this.element.focus();
 
+            this.keyupEvent = function() {
+                that.searchTermUpdatedDelegate(this.value);
+            };
+
+            this.element.addEventListener('keyup', this.keyupEvent);
+
+        };
+
+        SearchStationsInputView.prototype.deactivate = function() {
+            this.element.removeEventListener('keyup', this.keyupEvent);
         };
 
         return SearchStationsInputView;

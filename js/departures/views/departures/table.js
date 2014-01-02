@@ -19,14 +19,24 @@ define(
         DeparturesTableView.prototype.activate = function() {
             this.showDeparturesTable();
             this.setContentHeight();
-            this.initEventListeners();
+            this.addEventListeners();
         };
 
-        DeparturesTableView.prototype.initEventListeners = function() {
+        DeparturesTableView.prototype.deactivate = function() {
+            this.removeEventListeners();
+        };
+
+        DeparturesTableView.prototype.addEventListeners = function() {
             var that = this;
-            window.addEventListener('resize', function(event) {
+            this.resizeEvent = function(event) {
+                console.log('ja zors');
                 that.setContentHeight();
-            });
+            };
+            window.addEventListener('resize', this.resizeEvent);
+        };
+
+        DeparturesTableView.prototype.removeEventListeners = function() {
+            window.removeEventListener('resize', this.resizeEvent);
         };
 
         DeparturesTableView.prototype.setContentHeight = function() {

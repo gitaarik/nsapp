@@ -7,22 +7,37 @@ define(
 
         function SearchStationsResults(element) {
             this.element = element;
-            this.setContentHeight();
-            this.initEventListeners();
         }
 
-        SearchStationsResults.prototype.initEventListeners = function() {
+        SearchStationsResults.prototype.activate = function() {
+            this.addEventListeners();
+            this.setContentHeight();
+        };
+
+        SearchStationsResults.prototype.deactivate = function() {
+            this.removeEventListeners();
+        };
+
+        SearchStationsResults.prototype.addEventListeners = function() {
 
             var that = this;
 
-            this.element.addEventListener('click', function(event) {
+            this.clickEvent = function(event) {
                 that.handleStationListClick(event);
-            });
+            };
 
-            window.addEventListener('resize', function(event) {
+            this.resizeEvent = function() {
                 that.setContentHeight();
-            });
+            };
 
+            this.element.addEventListener('click', this.clickEvent);
+            window.addEventListener('resize', this.resizeEvent);
+
+        };
+
+        SearchStationsResults.prototype.removeEventListeners = function() {
+            this.element.removeEventListener('click', this.clickEvent);
+            window.removeEventListener('resize', this.resizeEvent);
         };
 
         SearchStationsResults.prototype.setContentHeight = function() {
