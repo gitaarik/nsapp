@@ -13,6 +13,7 @@ define(
             var that = this;
             this.element = element;
             this.station = station;
+            this.departures_table_container = document.getElementById('departures-table-container'); 
             this.departures_table_body = document.getElementById('departures-table-body');
             this.departures_not_available = document.getElementById('departures-not-available');
 
@@ -178,14 +179,14 @@ define(
 
             }
 
-            this.departures_table_body.style.display = 'table';
+            this.departures_table_container.style.display = 'table';
             this.departures_not_available.style.display = 'none';
             fillTable();
 
         }
 
         DeparturesView.prototype.showError = function(departures) {
-            this.departures_table_body.style.display = 'none';
+            this.departures_table_container.style.display = 'none';
             this.departures_not_available.style.display = 'block';
         }
 
