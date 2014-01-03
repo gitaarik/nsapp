@@ -48,7 +48,7 @@ define(
             var that = this;
             search_term = search_term.trim();
 
-            if (search_term.length > 2) {
+            if (search_term.length > 1) {
 
                 // TODO: add loader and remove loader on callback.
 

@@ -50,9 +50,11 @@ define(
 
         SearchStations.prototype.getResults = function() {
 
+            var that = this;
+
             function sortStations(stations) { 
                 return stations.sort(function(a, b) {
-                    return a.levenshtein - b.levenshtein;
+                    return b.score - a.score;
                 });
             }
 
@@ -78,81 +80,124 @@ define(
 
             // Remove duplicates AFTER sorting so that the duplicate
             // that had the best position will be preserved.
-            this.callback(removeDuplicates(sortStations(this.search())));
+            this.callback(removeDuplicates(sortStations(this.getStations())));
 
         };
 
-        SearchStations.prototype.search = function() {
+        SearchStations.prototype.getStations = function() {
 
-            var that = this;
+            var stations = [];
 
-            /**
-             * Returns the regexes to use for searching for station
-             * names.
-             */
-            function getRegexes() {
+            for (var station_name in this.station_names) {
 
-                var regexes = [];
-                var search_words = that.search_term.split(' ');
+                var code = this.station_names[station_name];
+                var station = this.stations[code];
 
-                for (var word in search_words) {
-                    regexes.push(
-                        new RegExp(escape_regex(search_words[word]), 'i')
-                    );
-                }
+                // Calculating the score for a match:
+                //
+                // Full string:
+                // 200  - exact match                       - "amsterdam rai" : "amsterdam rai"
+                // 50   - match start of string             - "ams" : "amsterdam"
+                //
+                // Get points per word:
+                // 20   - exact match of a single word      - "rai" : "amsterdam rai"
+                // 10   - match of start of single word     - "ra" : "amsterdam rai"
+                //
+                // Levenshtein for the cripple:
+                // 3 minus levenshtein score if levenshtein score is <= 3
+                //
+                // Don't include stations with a score of 0.
 
-                return regexes;
+                station_name = station_name.toLowerCase();
+                var search_term = this.search_term.toLowerCase();
+                var score = 0;
+                var search_words;
+                var search_word_key;
+                var search_word;
+                var station_words;
+                var station_word_key;
+                var station_word;
+                var levenshtein_score;
 
-            }
-
-            /**
-             * Returns whether a station matches or not.
-             */
-            function matchStation(name, regexes) {
-
-                var match = true;
-
-                for (var regex in regexes) {
-                    if (name.search(regexes[regex]) == -1) {
-                        match = false;
+                if (station_name == search_term) {
+                    // exact match
+                    score += 1000;
+                } else {
+                    
+                    if (
+                        search_term.length > 1 &&
+                        station_name.substr(0, search_term.length) == search_term
+                    ) {
+                        // match start of string
+                        score += 500;
                     }
+
+                    search_words = search_term.split(' ');
+                    station_words = station_name.split(' ');
+
+                    // points per word
+                    for (search_word_key in search_words) {
+
+                        search_word = search_words[search_word_key].trim();
+
+                        for (station_word_key in station_words) {
+
+                            station_word = station_words[station_word_key].trim();
+
+                            if (station_word == search_word) {
+                                // exact match of a single word
+                                score += 200;
+                                break;
+                            } else if (
+                                search_word.length > 1 &&
+                                station_word.substr(0, search_word.length) == search_word
+                            ) {
+                                // match of start of single word
+                                score += 100;
+                                break;
+                            }
+
+                            if (search_word.length > 3) {
+                                levenshtein_score = levenshtein(search_word, station_word.substr(0, search_word.length));
+                                if (levenshtein_score > 3) {
+                                    score -= levenshtein_score;
+                                } else {
+                                    score += (3 - levenshtein_score) * 10;
+                                }
+                            }
+
+                            levenshtein_score = levenshtein(search_word, station_word);
+                            if (levenshtein_score > 3) {
+                                score -= levenshtein_score;
+                            } else {
+                                score += (3 - levenshtein_score) * 15;
+                            }
+
+                        }
+
+                    }
+
+                    levenshtein_score = levenshtein(search_term, station_name);
+                    if (levenshtein_score > 3) {
+                        score -= levenshtein_score;
+                    } else {
+                        score += (3 - levenshtein_score) * 30;
+                    }
+
                 }
 
-                return match;
-
-            }
-
-            /**
-             * Returns the matches for the search_term.
-             */
-            function getMatches() {
-
-                function addMatch(station) {
-                    matches.push({
-                        'code': code,
+                if (score > 0) {
+                    stations.push({
+                        'code': station.code,
                         'name': station.name,
-                        'levenshtein': levenshtein(that.search_term, name)
+                        'score': score
                     });
                 }
 
-                var matches = [];
-                var regexes = getRegexes();
-                var matched_station_codes = [];
-
-                for (var name in that.station_names) {
-
-                    if (matchStation(name, regexes)) {
-                        var code = that.station_names[name];
-                        addMatch(that.stations[code]);
-                    }
-
-                }
-
-                return matches;
-
             }
 
-            return getMatches();
+            console.log(stations);
+            return stations;
 
         };
 
