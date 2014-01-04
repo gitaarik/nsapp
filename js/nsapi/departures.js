@@ -45,12 +45,15 @@ define(
 
         Departures.prototype.receivedDepartures = function(station, departures) {
 
-            this.departures[station] = departures;
+            this.departures[station] = {
+                departures: departures,
+                time_received: new Date()
+            };
 
             if (station in this.success_callbacks) {
 
                 for (var key in this.success_callbacks[station]) {
-                    this.success_callbacks[station][key](this.departures[station]);
+                    this.success_callbacks[station][key](this.departures[station].departures);
                 }
 
                 delete this.success_callbacks[station];
@@ -71,8 +74,10 @@ define(
 
         Departures.prototype.getByCallback = function(station, success_callback, failed_callback) {
 
-            if (station in this.departures) {
-                success_callback(this.departures[station]);
+            var departures = this.getFromCache(station);
+
+            if (departures) {
+                success_callback(departures);
             } else {
 
                 if (!(station in this.success_callbacks)) {
@@ -92,6 +97,21 @@ define(
                 this.success_callbacks[station].push(success_callback);
                 this.getDepartures(station);
 
+            }
+
+        };
+
+        Departures.prototype.getFromCache = function(station) {
+
+            function isOutdated(cache) {
+                return (new Date() - cache.time_received) > (1000 * 10);
+            }
+
+            if (
+                station in this.departures &&
+                !isOutdated(this.departures[station])
+            ) {
+                return this.departures[station].departures;
             }
 
         };
