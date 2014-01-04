@@ -104,7 +104,8 @@ define(
         Departures.prototype.getFromCache = function(station) {
 
             function isOutdated(cache) {
-                return (new Date() - cache.time_received) > (1000 * 10);
+                // cache is outdated if it's older than 5 minutes
+                return (new Date() - cache.time_received) > (1000 * 60 * 5);
             }
 
             if (
