@@ -16,6 +16,7 @@ define(
             this.station_results_container_el = document.getElementById('station-results-container');
             this.station_results_no_results_el = document.getElementById('station-results-no-results');
             this.station_results_el = document.getElementById('station-results');
+            this.station_results_loader_el = document.getElementById('station-results-loader');
             this.search_station_input_container_el = document.getElementById('search-station-input-container');
             this.searchStations = new SearchStations();
         }
@@ -52,7 +53,7 @@ define(
 
             if (search_term.length > 1) {
 
-                // TODO: add loader and remove loader on callback.
+                this.showLoader();
 
                 this.searchStations.getByCallback(search_term, function(stations) {
 
@@ -71,14 +72,25 @@ define(
         };
 
         SearchStationsView.prototype.showStationResults = function(stations) {
+
             this.station_results_no_results_el.style.display = 'none';
+            this.station_results_loader_el.style.display = 'none';
             this.station_results_container_el.style.display = 'block';
+
             this.searchStationsResultsView.updateStations(stations);
+
         };
 
         SearchStationsView.prototype.showNoResultsMessage = function() {
             this.station_results_container_el.style.display = 'none';
+            this.station_results_loader_el.style.display = 'none';
             this.station_results_no_results_el.style.display = 'block';
+        };
+
+        SearchStationsView.prototype.showLoader = function() {
+            this.station_results_container_el.style.display = 'none';
+            this.station_results_no_results_el.style.display = 'none';
+            this.station_results_loader_el.style.display = 'block';
         };
 
         return SearchStationsView;

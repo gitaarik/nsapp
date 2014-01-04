@@ -15,15 +15,15 @@ define(
             var that = this;
             this.element = element;
             this.station = station;
-            this.departures_table_container = document.getElementById('departures-table-container'); 
-            this.departures_not_available = document.getElementById('departures-not-available');
+            this.departures_table_container_el = document.getElementById('departures-table-container'); 
+            this.departures_not_available_el = document.getElementById('departures-not-available');
+            this.departures_loader_el = document.getElementById('departures-loader');
         }
 
         DeparturesView.prototype.activate = function() {
 
             var that = this;
-
-            // TODO: show loading screen
+            this.showLoader();
 
             Departures.getByCallback(
                 this.station.code,
@@ -55,11 +55,16 @@ define(
         };
 
         DeparturesView.prototype.showDeparturesTable = function(departures) {
+
+            this.departures_loader_el.style.display = 'none';
+            this.departures_table_container_el.style.display = 'block';
+
             this.departuresTableView = new DeparturesTableView(
                 document.getElementById('departures-table-container'),
                 departures
             );
             this.departuresTableView.activate();
+
         };
 
         DeparturesView.prototype.setHeaderName = function() {
@@ -69,8 +74,15 @@ define(
         };
 
         DeparturesView.prototype.showError = function(departures) {
-            this.departures_table_container.style.display = 'none';
-            this.departures_not_available.style.display = 'block';
+            this.departures_table_container_el.style.display = 'none';
+            this.departures_loader_el.style.display = 'none';
+            this.departures_not_available_el.style.display = 'block';
+        };
+
+        DeparturesView.prototype.showLoader = function(departures) {
+            this.departures_table_container_el.style.display = 'none';
+            this.departures_not_available_el.style.display = 'none';
+            this.departures_loader_el.style.display = 'block';
         };
 
         return DeparturesView;
