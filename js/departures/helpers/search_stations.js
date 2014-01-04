@@ -93,20 +93,8 @@ define(
                 var code = this.station_names[station_name];
                 var station = this.stations[code];
 
-                // Calculating the score for a match:
-                //
-                // Full string:
-                // 200  - exact match                       - "amsterdam rai" : "amsterdam rai"
-                // 50   - match start of string             - "ams" : "amsterdam"
-                //
-                // Get points per word:
-                // 20   - exact match of a single word      - "rai" : "amsterdam rai"
-                // 10   - match of start of single word     - "ra" : "amsterdam rai"
-                //
-                // Levenshtein for the cripple:
-                // 3 minus levenshtein score if levenshtein score is <= 3
-                //
-                // Don't include stations with a score of 0.
+                // Calculating the score for a match, kinda
+                // complicated, should document this maybe sometime.
 
                 station_name = station_name.toLowerCase();
                 var search_term = this.search_term.toLowerCase();
@@ -196,7 +184,6 @@ define(
 
             }
 
-            console.log(stations);
             return stations;
 
         };

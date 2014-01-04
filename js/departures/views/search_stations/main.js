@@ -13,8 +13,10 @@ define(
 
         function SearchStationsView(element) {
             this.element = element;
-            this.search_station_input_el = document.getElementById('search-station-input');
+            this.station_results_container_el = document.getElementById('station-results-container');
+            this.station_results_no_results_el = document.getElementById('station-results-no-results');
             this.station_results_el = document.getElementById('station-results');
+            this.search_station_input_container_el = document.getElementById('search-station-input-container');
             this.searchStations = new SearchStations();
         }
 
@@ -29,9 +31,9 @@ define(
             };
             this.searchStationsResultsView.activate();
 
-            this.searchStationsInputView = new SearchStationsInputView(this.search_station_input_el);
+            this.searchStationsInputView = new SearchStationsInputView(this.search_station_input_container_el);
             this.searchStationsInputView.searchTermUpdatedDelegate = function(search_term) {
-                that.showStationResults(search_term);
+                that.processSearchTerm(search_term);
             };
             this.searchStationsInputView.activate();
 
@@ -43,7 +45,7 @@ define(
             this.element.style.display = 'none';
         };
 
-        SearchStationsView.prototype.showStationResults = function(search_term) {
+        SearchStationsView.prototype.processSearchTerm = function(search_term) {
 
             var that = this;
             search_term = search_term.trim();
@@ -53,13 +55,30 @@ define(
                 // TODO: add loader and remove loader on callback.
 
                 this.searchStations.getByCallback(search_term, function(stations) {
-                    that.searchStationsResultsView.updateStations(stations);
+
+                    if (stations.length) {
+                        that.showStationResults(stations);
+                    } else {
+                        that.showNoResultsMessage();
+                    }
+
                 });
 
             } else {
-                that.searchStationsResultsView.updateStations([]);
+                that.showStationResults([]);
             }
 
+        };
+
+        SearchStationsView.prototype.showStationResults = function(stations) {
+            this.station_results_no_results_el.style.display = 'none';
+            this.station_results_container_el.style.display = 'block';
+            this.searchStationsResultsView.updateStations(stations);
+        };
+
+        SearchStationsView.prototype.showNoResultsMessage = function() {
+            this.station_results_container_el.style.display = 'none';
+            this.station_results_no_results_el.style.display = 'block';
         };
 
         return SearchStationsView;
