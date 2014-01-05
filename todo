@@ -1,9 +1,5 @@
-- Laten zien als er geen resultaten zijn bij stations
-- Loading screen
 - Delete cache na x tijd
-- Table header column witdh sluit niet altijd aan
-- Geen vertrektijden beschikbaar view is fucked
-- wanneer een opmerking "Rijdt vandaag niet" is, ding uitgrayen en opmerking laten zien, "Niet instappen" is ook mogelijk
+- wanneer een opmerking "Rijdt vandaag niet" is, ding uitgrayen en opmerking laten zien, "Niet instappen" is ook mogelijk, "Extra trein" bestaat ook
 
 Features:
-- Favoriet toevoegen<br>
+- Favoriet toevoegen

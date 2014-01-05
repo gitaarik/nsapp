@@ -136,6 +136,25 @@ define(
 
                 }
 
+                if (departure.opmerkingen.length > 0) {
+
+                    var remarks_el = document.createElement('ul');
+                    remarks_el.setAttribute('class', 'remarks');
+                    to_column.appendChild(remarks_el);
+
+                    for (var key in departure.opmerkingen) {
+
+                        var remark_el = document.createElement('li');
+                        var remark_text = document.createTextNode(
+                            departure.opmerkingen[key]);
+
+                        remark_el.appendChild(remark_text);
+                        remarks_el.appendChild(remark_el);
+
+                    }
+
+                }
+
                 return to_column;
 
             }

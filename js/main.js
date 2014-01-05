@@ -1,10 +1,7 @@
-require(['departures/main'], function(DepartureTimes) {
+require(['departures/main'], function(Departure) {
     'use strict';
 
-    var departureTimes = new DepartureTimes();
-    departureTimes.activate();
-
-    // temp hack for development
-    //departureTimes.showDepartures('ASD');
+    var departure = new Departure();
+    departure.activate();
 
 });
