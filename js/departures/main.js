@@ -10,11 +10,6 @@ define(
         'use strict';
 
         function Departures() {
-            this.initViews();
-            this.addEventListeners();
-        }
-
-        Departures.prototype.initViews = function() {
             this.back_button_el = document.getElementById('departures-back-button');
             this.search_stations_el = document.getElementById('search-stations');
             this.departures_el = document.getElementById('departures');
@@ -23,12 +18,13 @@ define(
         Departures.prototype.activate = function() {
 
             var that = this;
-            this.searchStationsView = new SearchStationsView(this.search_stations_el);
 
+            this.addEventListeners();
+
+            this.searchStationsView = new SearchStationsView(this.search_stations_el);
             this.searchStationsView.openStationDelegate = function(station) {
                 that.showDepartures(station);
             };
-
             this.searchStationsView.activate();
 
         };

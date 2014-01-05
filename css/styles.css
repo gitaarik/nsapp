@@ -137,6 +137,7 @@ body {
 
 #departures-table-body .delay {
     font-size: 12px;
+    color: #F00;
 }
 
 #departures-table-body .train-type,
