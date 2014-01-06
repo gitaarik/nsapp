@@ -53,7 +53,11 @@ define(
             if (station in this.success_callbacks) {
 
                 for (var key in this.success_callbacks[station]) {
-                    this.success_callbacks[station][key](this.departures[station].departures);
+                    this.success_callbacks[station][key](
+                        this.filterPastDepartures(
+                            this.departures[station].departures
+                        )
+                    );
                 }
 
                 delete this.success_callbacks[station];
@@ -112,10 +116,45 @@ define(
                 station in this.departures &&
                 !isOutdated(this.departures[station])
             ) {
-                return this.departures[station].departures;
+                return this.filterPastDepartures(
+                    this.departures[station].departures);
             }
 
         };
+
+        /*
+         * Filters departures that are in the past.
+         */
+        Departures.prototype.filterPastDepartures = function(departures) {
+
+            // TODO: This function needs to take into account the delay
+            // a train could have. Maybe it's best to have the backend
+            // return a new field with the "actual" departure time by
+            // adding up the original departure time and the delay.
+            //
+            // For now return the original:
+            return departures;
+
+            var filtered_departures = [];
+
+            for (var key in departures) {
+
+                var departure = departures[key];
+
+                // Give two minutes margin in case the train didn't
+                // leave jet.
+                if (
+                    Date.parse(departure.vertrektijd) - (1000 * 120) >
+                    Date.now()
+                ) {
+                    filtered_departures.push(departure);
+                }
+
+            }
+
+            return filtered_departures;
+
+        }
 
         Departures.getInstance = function() {
              if (instance === null) {
