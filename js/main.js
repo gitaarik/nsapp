@@ -9,9 +9,10 @@ require(['departures/main'], function(Departure) {
     // At the time of writing, this API call is experimental and only
     // Gecko has an implementation for it under `mozLockOrientation`, so
     // we put it inside a try.
-    try {
-        screen.mozLockOrientation('portrait');
-    } finally { }
+    //
+    // try {
+    //     screen.mozLockOrientation('portrait-primary');
+    // } finally { }
 
     var departure = new Departure();
     departure.activate();

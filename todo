@@ -1,6 +1,4 @@
-- design van vertrektijden beetje upgraden (bv +2 min. rood maken)
 - Delete stations/stationnames cache na x tijd
-- wanneer een opmerking "Rijdt vandaag niet" is, ding uitgrayen en opmerking laten zien, "Niet instappen" is ook mogelijk
 
 Features:
 - Favoriet toevoegen

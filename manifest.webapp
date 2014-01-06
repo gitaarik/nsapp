@@ -9,7 +9,7 @@
     "120": "/media/icon-120.png",
     "128": "/media/icon-128.png"
   },
-  "orientation": ["portrait"],
+  "orientation": ["portrait-primary"],
   "developer": {
     "name": "gitaarik",
     "url": "https://github.com/gitaarik"
