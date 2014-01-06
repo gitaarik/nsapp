@@ -1,3 +1,4 @@
+- Error messages wanneer er geen connectie is.
 - Delete stations/stationnames cache na x tijd
 
 Features:

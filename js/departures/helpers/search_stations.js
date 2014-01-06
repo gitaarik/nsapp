@@ -95,6 +95,8 @@ define(
 
                 // Calculating the score for a match, kinda
                 // complicated, should document this maybe sometime.
+                // Also refactor probably...
+                // TODO
 
                 station_name = station_name.toLowerCase();
                 var search_term = this.search_term.toLowerCase();
