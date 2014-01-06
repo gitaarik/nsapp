@@ -50,9 +50,9 @@ define(
 
             function getDepartureTime(departure) {
 
-                if (departure.vertrektijd) {
+                if (departure.departure_time) {
 
-                    var departure_time_parsed = Date.parse(departure.vertrektijd);
+                    var departure_time_parsed = Date.parse(departure.departure_time);
 
                     if (departure_time_parsed) {
 
@@ -86,13 +86,13 @@ define(
                 time_column.setAttribute('class', 'time');
                 time_column.appendChild(departure_time_el);
 
-                if (departure.vertrekvertragingtekst) {
+                if (departure.departure_delay > 0) {
 
                     var delay_el = document.createElement('div');
 
                     delay_el.setAttribute('class', 'delay');
                     delay_el.appendChild(document.createTextNode(
-                        departure.vertrekvertragingtekst
+                        '+' + departure.departure_delay + ' min'
                     ));
 
                     time_column.appendChild(delay_el);
@@ -111,42 +111,42 @@ define(
 
                 destination_el.setAttribute('class', 'destination');
                 destination_el.appendChild(
-                    document.createTextNode(departure.eindbestemming)
+                    document.createTextNode(departure.destination)
                 );
 
                 train_type_el.setAttribute('class', 'train-type');
                 train_type_el.appendChild(
-                    document.createTextNode(departure.treinsoort)
+                    document.createTextNode(departure.train_type)
                 );
 
                 to_column.setAttribute('class', 'to');
                 to_column.appendChild(destination_el);
                 to_column.appendChild(train_type_el);
 
-                if (departure.routetekst) {
+                if (departure.route_text) {
 
                     var route_info_el = document.createElement('div');
 
                     route_info_el.setAttribute('class', 'route-info');
                     route_info_el.appendChild(
-                        document.createTextNode(departure.routetekst)
+                        document.createTextNode(departure.route_text)
                     );
 
                     to_column.appendChild(route_info_el);
 
                 }
 
-                if (departure.opmerkingen.length > 0) {
+                if (departure.remarks.length > 0) {
 
                     var remarks_el = document.createElement('ul');
                     remarks_el.setAttribute('class', 'remarks');
                     to_column.appendChild(remarks_el);
 
-                    for (var key in departure.opmerkingen) {
+                    for (var key in departure.remarks) {
 
                         var remark_el = document.createElement('li');
                         var remark_text = document.createTextNode(
-                            departure.opmerkingen[key]);
+                            departure.remarks[key]);
 
                         remark_el.appendChild(remark_text);
                         remarks_el.appendChild(remark_el);
@@ -165,17 +165,17 @@ define(
 
                 platform_column.setAttribute('class', 'platform');
 
-                if (departure.vertrekspoor) {
+                if (departure.platform) {
                     // Sometimes buses are listed in the departures,
                     // they don't have platforms.
 
                     var platform_el = document.createElement('div');
 
                     platform_el.appendChild(
-                        document.createTextNode(departure.vertrekspoor)
+                        document.createTextNode(departure.platform)
                     );
 
-                    if (departure.vertrekspoor_gewijzigd) {
+                    if (departure.platform_changed) {
                         platform_el.setAttribute('class', 'platform-changed');
                     }
 
