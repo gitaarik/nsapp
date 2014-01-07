@@ -61,10 +61,16 @@ body {
 }
 
 #station-results-no-results,
-#station-results-loader {
+#station-results-loader,
+#station-results-no-connection {
     display: none;
     text-align: center;
     padding: 10px;
+}
+
+#station-results-no-connection {
+    font-weight: bold;
+    color: #F00;
 }
 
 #station-results {
@@ -165,8 +171,14 @@ body {
 }
 
 #departures-not-available,
-#departures-loader {
+#departures-loader,
+#departures-no-connection {
     display: none;
     padding: 20px;
     text-align: center;
+}
+
+#departures-no-connection {
+    font-weight: bold;
+    color: #F00;
 }

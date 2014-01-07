@@ -14,41 +14,58 @@ define(
         'use strict';
 
         function SearchStations(element) {
-
-            var that = this;
             this.station_names = null;
             this.stations = null;
-            this.callback = null;
+            this.success_callback = null;
+            this.failed_callback = null;
             this.search_term = null;
-
-            StationNames.getByCallback(function(station_names) {
-                that.station_names = station_names;
-                that.getResults();
-            });
-
-            Stations.getByCallback(function(stations) {
-                that.stations = stations;
-                that.getResults();
-            });
-
         }
 
-        SearchStations.prototype.isReady = function() {
-            return (
-                this.station_names !== null &&
-                this.stations !== null &&
-                this.search_term !== null &&
-                this.callback !== null
-            );
-        };
+        SearchStations.prototype.getByCallback = function(search_term, success_callback, failed_callback) {
 
-        SearchStations.prototype.getByCallback = function(search_term, callback) {
-            this.callback = callback;
+            var that = this;
             this.search_term = search_term;
-            this.getResults();
+            this.success_callback = success_callback;
+            this.failed_callback = failed_callback;
+
+            StationNames.getByCallback(
+                function(station_names) {
+                    that.station_names = station_names;
+                    that.receivedData();
+                },
+                function(error_code) {
+                    that.failedToReceiveData(error_code);
+                }
+            );
+
+            Stations.getByCallback(
+                function(stations) {
+                    that.stations = stations;
+                    that.receivedData();
+                },
+                function(error_code) {
+                    that.failedToReceiveData(error_code);
+                }
+            );
+
         };
 
-        SearchStations.prototype.getResults = function() {
+        /**
+         * Prefetches the data used by this class.
+         *
+         * This can be handy if you want the data to be prefetched on
+         * the background while the user is using the app.
+         *
+         * Prefetches the station names and stations by calling the
+         * `getByCallback` methods on their classes with an empty
+         * callback function.
+         */
+        SearchStations.prototype.prefetchData = function() {
+            StationNames.getByCallback(function() { });
+            Stations.getByCallback(function() { });
+        };
+
+        SearchStations.prototype.receivedData = function() {
 
             var that = this;
 
@@ -74,14 +91,18 @@ define(
 
             }
 
-            if (!this.isReady()) {
-                return;
+            if(this.station_names && this.stations) {
+                // Remove duplicates AFTER sorting so that the duplicate
+                // that has the best position will be preserved.
+                this.success_callback(removeDuplicates(sortStations(this.getStations())));
             }
 
-            // Remove duplicates AFTER sorting so that the duplicate
-            // that had the best position will be preserved.
-            this.callback(removeDuplicates(sortStations(this.getStations())));
+        };
 
+        SearchStations.prototype.failedToReceiveData = function(error_code) {
+            if (this.failed_callback) {
+                this.failed_callback(error_code);
+            }
         };
 
         SearchStations.prototype.getStations = function() {

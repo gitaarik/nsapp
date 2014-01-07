@@ -10,11 +10,17 @@ define(
         var instance = null;
 
         function StationNames() {
-            this.callbacks = [];
+            this.success_callbacks = [];
+            this.failed_callbacks = [];
             this.station_names = null;
+            this.is_fetching = false;
         }
 
         StationNames.prototype.getStationNames = function() {
+
+            if (this.is_fetching) {
+                return;
+            }
 
             var that = this;
             var request = new XMLHttpRequest();
@@ -26,16 +32,19 @@ define(
 
                 if (this.readyState == 4) {
 
+                    that.is_fetching = false;
+
                     if (this.status == 200) {
                         that.receivedStationNames(JSON.parse(this.responseText));
                     } else {
-                        console.log("Failed to fetch station names. Response status: " + request.status);
+                        that.failedToReceivedStationNames('server_not_reachable');
                     }
 
                 }
 
             };
 
+            this.is_fetching = true;
             request.send();
 
         };
@@ -44,25 +53,43 @@ define(
 
             this.station_names = station_names;
 
-            if (this.callbacks) {
+            if (this.success_callbacks) {
 
-                for (var key in this.callbacks) {
-                    this.callbacks[key](this.station_names);
+                for (var key in this.success_callbacks) {
+                    this.success_callbacks[key](this.station_names);
                 }
 
-                this.callbacks = [];
+                this.success_callbacks = [];
 
             }
 
         };
 
-        StationNames.prototype.getByCallback = function(callback) {
+        StationNames.prototype.failedToReceivedStationNames = function(error_code) {
 
-            if (this.station_names === null) {
-                this.callbacks.push(callback);
-                this.getStationNames();
+            if (this.failed_callbacks) {
+
+                for (var key in this.failed_callbacks) {
+                    this.failed_callbacks[key](error_code);
+                }
+
+                this.failed_callbacks = [];
+
+            }
+
+        };
+
+        StationNames.prototype.getByCallback = function(success_callback, failed_callback) {
+
+            if (this.station_names) {
+                success_callback(this.station_names);
             } else {
-                callback(this.station_names);
+
+                this.success_callbacks.push(success_callback);
+                if (failed_callback) this.failed_callbacks.push(failed_callback);
+
+                this.getStationNames();
+
             }
 
         };

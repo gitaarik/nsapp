@@ -13,9 +13,14 @@ define(
             this.success_callbacks = {};
             this.failed_callbacks = {};
             this.departures = {};
+            this.is_fetching = {};
         }
 
         Departures.prototype.getDepartures = function(station) {
+
+            if (this.is_fetching[station]) {
+                return;
+            }
 
             var that = this;
             var request = new XMLHttpRequest();
@@ -27,18 +32,21 @@ define(
 
                 if (this.readyState == 4) {
 
+                    that.is_fetching[station] = false;
+
                     if (this.status == 200) {
                         that.receivedDepartures(station, JSON.parse(this.responseText));
                     } else if (this.status == 404) {
-                        that.failedToReceiveDepartures(station, 'not-found');
+                        that.failedToReceiveDepartures(station, 'not_found');
                     } else {
-                        console.log("Failed to fetch departures. Response status: " + request.status);
+                        that.failedToReceiveDepartures(station, 'server_not_reachable');
                     }
 
                 }
 
             };
 
+            this.is_fetching[station] = true;
             request.send();
 
         };

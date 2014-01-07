@@ -12,13 +12,18 @@ define(
         'use strict';
 
         function SearchStationsView(element) {
+
             this.element = element;
             this.station_results_container_el = document.getElementById('station-results-container');
             this.station_results_no_results_el = document.getElementById('station-results-no-results');
             this.station_results_el = document.getElementById('station-results');
             this.station_results_loader_el = document.getElementById('station-results-loader');
             this.search_station_input_container_el = document.getElementById('search-station-input-container');
+            this.station_results_no_connection_el = document.getElementById('station-results-no-connection');
+
             this.searchStations = new SearchStations();
+            this.searchStations.prefetchData();
+
         }
 
         SearchStationsView.prototype.activate = function() {
@@ -55,15 +60,20 @@ define(
 
                 this.showLoader();
 
-                this.searchStations.getByCallback(search_term, function(stations) {
+                this.searchStations.getByCallback(search_term,
+                    function(stations) {
 
-                    if (stations.length) {
-                        that.showStationResults(stations);
-                    } else {
-                        that.showNoResultsMessage();
+                        if (stations.length) {
+                            that.showStationResults(stations);
+                        } else {
+                            that.showNoResultsMessage();
+                        }
+
+                    },
+                    function(error_code) {
+                        that.showNoConnection();
                     }
-
-                });
+                );
 
             } else {
                 that.showStationResults([]);
@@ -75,6 +85,7 @@ define(
 
             this.station_results_no_results_el.style.display = 'none';
             this.station_results_loader_el.style.display = 'none';
+            this.station_results_no_connection_el.style.display = 'none';
             this.station_results_container_el.style.display = 'block';
 
             this.searchStationsResultsView.updateStations(stations);
@@ -84,13 +95,22 @@ define(
         SearchStationsView.prototype.showNoResultsMessage = function() {
             this.station_results_container_el.style.display = 'none';
             this.station_results_loader_el.style.display = 'none';
+            this.station_results_no_connection_el.style.display = 'none';
             this.station_results_no_results_el.style.display = 'block';
         };
 
         SearchStationsView.prototype.showLoader = function() {
             this.station_results_container_el.style.display = 'none';
             this.station_results_no_results_el.style.display = 'none';
+            this.station_results_no_connection_el.style.display = 'none';
             this.station_results_loader_el.style.display = 'block';
+        };
+
+        SearchStationsView.prototype.showNoConnection = function() {
+            this.station_results_container_el.style.display = 'none';
+            this.station_results_no_results_el.style.display = 'none';
+            this.station_results_loader_el.style.display = 'none';
+            this.station_results_no_connection_el.style.display = 'block';
         };
 
         return SearchStationsView;

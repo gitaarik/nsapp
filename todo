@@ -1,5 +1,5 @@
-- Error messages wanneer er geen connectie is.
-- Delete stations/stationnames cache na x tijd
+- try werk blijkbaar niet in chrome
+- Delete stations/stationnames cache na een dag
 
 Features:
 - Favoriet toevoegen

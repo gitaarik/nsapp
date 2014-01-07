@@ -16,8 +16,9 @@ define(
             this.element = element;
             this.station = station;
             this.departures_table_container_el = document.getElementById('departures-table-container'); 
-            this.departures_not_available_el = document.getElementById('departures-not-available');
             this.departures_loader_el = document.getElementById('departures-loader');
+            this.departures_not_available_el = document.getElementById('departures-not-available');
+            this.departures_no_connection = document.getElementById('departures-no-connection');
         }
 
         DeparturesView.prototype.activate = function() {
@@ -35,7 +36,19 @@ define(
                 function(error_code) {
                     // failed
                     that.success = false;
-                    that.showError(departures);
+
+                    switch(error_code) {
+
+                        case 'not_found':
+                            that.showNotAvailable(departures);
+                            break;
+
+                        case 'server_not_reachable':
+                            that.showNoConnection(departures);
+                            break;
+
+                    }
+
                 }
             );
 
@@ -73,16 +86,25 @@ define(
             header_el.appendChild(document.createTextNode(this.station.name));
         };
 
-        DeparturesView.prototype.showError = function(departures) {
-            this.departures_table_container_el.style.display = 'none';
-            this.departures_loader_el.style.display = 'none';
-            this.departures_not_available_el.style.display = 'block';
-        };
-
         DeparturesView.prototype.showLoader = function(departures) {
             this.departures_table_container_el.style.display = 'none';
             this.departures_not_available_el.style.display = 'none';
+            this.departures_no_connection.style.display = 'none';
             this.departures_loader_el.style.display = 'block';
+        };
+
+        DeparturesView.prototype.showNotAvailable = function(departures) {
+            this.departures_table_container_el.style.display = 'none';
+            this.departures_loader_el.style.display = 'none';
+            this.departures_no_connection.style.display = 'none';
+            this.departures_not_available_el.style.display = 'block';
+        };
+
+        DeparturesView.prototype.showNoConnection = function(departures) {
+            this.departures_table_container_el.style.display = 'none';
+            this.departures_loader_el.style.display = 'none';
+            this.departures_not_available_el.style.display = 'none';
+            this.departures_no_connection.style.display = 'block';
         };
 
         return DeparturesView;
