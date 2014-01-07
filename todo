@@ -1,4 +1,5 @@
-- Refresh page wanneer app active wordt
+- bij refresh van departures bij window focus event silently nieuwe
+  departures ophalen als data niet te oud is.
 - Delete stations/stationnames cache na een dag
 
 Features:
