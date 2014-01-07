@@ -7,8 +7,7 @@ require(['departures/main'], function(Departure) {
     // when the orentation accelerometer of the phone is buggy.
     //
     // At the time of writing, this API call is experimental and only
-    // Gecko has an implementation for it under `mozLockOrientation`, so
-    // we put it inside a try.
+    // Gecko has an implementation for it under `mozLockOrientation`.
     //
     // The orientation is also specified in the manifest.webapp but that
     // doesn't seem to work correctly on at least the Geeksphone Peek.
@@ -16,9 +15,9 @@ require(['departures/main'], function(Departure) {
     // For more info see:
     // https://developer.mozilla.org/en-US/Apps/Developing/Manifest
     //
-    try {
+    if (screen.mozLockOrientation) {
         screen.mozLockOrientation('portrait-primary');
-    } finally { }
+    }
 
     var departure = new Departure();
     departure.activate();
