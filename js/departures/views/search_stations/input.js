@@ -56,20 +56,20 @@ define(
                 that.input_el.focus();
             };
 
-            this.windowActivatedEvent = function() {
+            this.windowFocusEvent = function() {
                 that.input_el.focus();
-            }
+            };
 
             this.input_el.addEventListener('keyup', this.keyupEvent);
             this.element.addEventListener('click', this.elementClickEvent);
-            window.addEventListener('focus', this.windowActivatedEvent);
+            window.addEventListener('focus', this.windowFocusEvent);
 
         };
 
         SearchStationsInputView.prototype.removeEventListeners = function() {
             this.input_el.removeEventListener('keyup', this.keyupEvent);
             this.element.removeEventListener('click', this.elementClickEvent);
-            window.removeEventListener('focus', this.windowActivatedEvent);
+            window.removeEventListener('focus', this.windowFocusEvent);
         };
 
         return SearchStationsInputView;

@@ -116,8 +116,8 @@ define(
         Departures.prototype.getFromCache = function(station) {
 
             function isOutdated(cache) {
-                // cache is outdated if it's older than 5 minutes
-                return (new Date() - cache.time_received) > (1000 * 60 * 5);
+                // cache is outdated if it's older than 1 minute
+                return (new Date() - cache.time_received) > (1000 * 60);
             }
 
             if (
@@ -141,11 +141,11 @@ define(
 
                 var departure = departures[key];
 
-                // Give two minutes margin in case the train didn't
+                // Give four minutes margin in case the train didn't
                 // leave jet.
                 if (
                     Date.parse(departure.departure_time_including_delay) >
-                    Date.now() - (1000 * 120)
+                    Date.now() - (1000 * 60 * 4)
                 ) {
                     filtered_departures.push(departure);
                 }

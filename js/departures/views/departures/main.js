@@ -23,7 +23,44 @@ define(
 
         DeparturesView.prototype.activate = function() {
 
+            this.addEventListeners();
+            this.loadDepartures(); 
+            this.element.style.display = 'block';
+            this.setHeaderName();
+
+        };
+
+        DeparturesView.prototype.deactivate = function() {
+
+            this.removeEventListeners();
+            this.element.style.display = 'none';
+
+            if (this.success) {
+                this.departuresTableView.deactivate();
+            }
+
+        };
+
+        DeparturesView.prototype.addEventListeners = function() {
+
             var that = this;
+
+            this.windowFocusEvent = function() {
+                that.loadDepartures();
+            };
+
+            window.addEventListener('focus', this.windowFocusEvent);
+
+        };
+
+        DeparturesView.prototype.removeEventListeners = function() {
+            window.removeEventListener('focus', this.windowFocusEvent);
+        };
+
+        DeparturesView.prototype.loadDepartures = function() {
+
+            var that = this;
+
             this.showLoader();
 
             Departures.getByCallback(
@@ -51,19 +88,6 @@ define(
 
                 }
             );
-
-            this.element.style.display = 'block';
-            this.setHeaderName();
-
-        };
-
-        DeparturesView.prototype.deactivate = function() {
-
-            this.element.style.display = 'none';
-
-            if (this.success) {
-                this.departuresTableView.deactivate();
-            }
 
         };
 
