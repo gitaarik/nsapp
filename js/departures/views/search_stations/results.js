@@ -62,11 +62,19 @@ define(
 
                 var station = stations[key];
                 var stationEl = document.createElement('li');
-                var name = document.createTextNode(station.name);
+                var favorite_el = document.createElement('div');
+                var name_el = document.createElement('div');
+                var name_text = document.createTextNode(station.name);
+
+                name_el.setAttribute('class', 'name');
+                name_el.appendChild(name_text);
+
+                favorite_el.setAttribute('class', 'favorite');
 
                 stationEl.station = station;
                 stationEl.setAttribute('class', 'station-option');
-                stationEl.appendChild(name);
+                stationEl.appendChild(name_el);
+                stationEl.appendChild(favorite_el);
 
                 this.element.appendChild(stationEl);
 

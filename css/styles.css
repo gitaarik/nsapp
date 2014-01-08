@@ -82,14 +82,27 @@ body {
 }
 
 #station-results li {
-    padding: 20px 10px;
     display: block;
+    overflow: hidden;
     font-size: 20px;
     color: #000D66;
+    height: 65px;
 }
 
 #station-results li:nth-child(2n+1) {
     background: #F2F2F7;
+}
+
+#station-results li .name {
+    padding: 20px 10px;
+    float: left;
+}
+
+#station-results li .favorite {
+    float: right;
+    background: green;
+    width: 65px;
+    height: 65px;
 }
 
 #departures header {
