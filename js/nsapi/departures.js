@@ -62,9 +62,7 @@ define(
 
                 for (var key in this.success_callbacks[station]) {
                     this.success_callbacks[station][key](
-                        this.filterPastDepartures(
-                            this.departures[station].departures
-                        )
+                        this.departures[station].departures
                     );
                 }
 
@@ -124,35 +122,8 @@ define(
                 station in this.departures &&
                 !isOutdated(this.departures[station])
             ) {
-                return this.filterPastDepartures(
-                    this.departures[station].departures);
+                return this.departures[station].departures;
             }
-
-        };
-
-        /*
-         * Filters departures that are in the past.
-         */
-        Departures.prototype.filterPastDepartures = function(departures) {
-
-            var filtered_departures = [];
-
-            for (var key in departures) {
-
-                var departure = departures[key];
-
-                // Give four minutes margin in case the train didn't
-                // leave jet.
-                if (
-                    Date.parse(departure.departure_time_including_delay) >
-                    Date.now() - (1000 * 60 * 4)
-                ) {
-                    filtered_departures.push(departure);
-                }
-
-            }
-
-            return filtered_departures;
 
         };
 

@@ -172,13 +172,16 @@ body {
 
 #departures-not-available,
 #departures-loader,
-#departures-no-connection {
+#departures-no-connection,
+#departures-table-loader,
+#departures-table-no-connection {
     display: none;
     padding: 20px;
     text-align: center;
 }
 
-#departures-no-connection {
+#departures-no-connection,
+#departures-table-no-connection {
     font-weight: bold;
     color: #F00;
 }
