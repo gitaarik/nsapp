@@ -1,13 +1,13 @@
 define(
     [
-        'nsapi/station_names',
-        'nsapi/stations',
+        'managers/station_names',
+        'managers/stations',
         'utils/escape_regex',
         'utils/levenshtein'
     ],
     function(
-        StationNames,
-        Stations,
+        StationNamesManager,
+        StationsManager,
         escape_regex,
         levenshtein
     ) {
@@ -19,6 +19,8 @@ define(
             this.success_callback = null;
             this.failed_callback = null;
             this.search_term = null;
+            this.station_names_manager = new StationNamesManager();
+            this.stations_manager = new StationsManager();
         }
 
         SearchStations.prototype.getByCallback = function(search_term, success_callback, failed_callback) {
@@ -28,7 +30,8 @@ define(
             this.success_callback = success_callback;
             this.failed_callback = failed_callback;
 
-            StationNames.getByCallback(
+
+            this.station_names_manager.getByCallback(
                 function(station_names) {
                     that.station_names = station_names;
                     that.receivedData();
@@ -38,7 +41,7 @@ define(
                 }
             );
 
-            Stations.getByCallback(
+            this.stations_manager.getByCallback(
                 function(stations) {
                     that.stations = stations;
                     that.receivedData();
@@ -61,8 +64,8 @@ define(
          * callback function.
          */
         SearchStations.prototype.prefetchData = function() {
-            StationNames.getByCallback(function() { });
-            Stations.getByCallback(function() { });
+            this.station_names_manager.getByCallback(function() { }, function() { });
+            this.stations_manager.getByCallback(function() { }, function() { });
         };
 
         SearchStations.prototype.receivedData = function() {

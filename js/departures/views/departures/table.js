@@ -1,9 +1,7 @@
 define(
     [
-        'nsapi/departures'
     ],
     function(
-        Departures
     ) {
         'use strict';
 
