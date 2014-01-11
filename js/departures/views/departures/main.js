@@ -1,12 +1,10 @@
 define(
     [
-        'nsapi/stations',
-        'nsapi/departures',
+        'managers/departures',
         'departures/views/departures/table'
     ],
     function(
-        Stations,
-        Departures,
+        DeparturesManager,
         DeparturesTableView
     ) {
         'use strict';
@@ -15,6 +13,7 @@ define(
             var that = this;
             this.element = element;
             this.station = station;
+            this.departures_manager = new DeparturesManager(station.code);
             this.departures_table_container_el = document.getElementById('departures-table-container'); 
             this.departures_loader_el = document.getElementById('departures-loader');
             this.departures_not_available_el = document.getElementById('departures-not-available');
@@ -70,8 +69,7 @@ define(
 
             this.showLoader();
 
-            Departures.getByCallback(
-                this.station.code,
+            this.departures_manager.getByCallback(
                 function(departures) {
                     // success
                     that.departures = departures;
