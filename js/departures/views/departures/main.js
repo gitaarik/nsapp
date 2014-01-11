@@ -10,17 +10,20 @@ define(
         'use strict';
 
         function DeparturesView(element, station) {
-            var that = this;
+
             this.element = element;
             this.station = station;
+
             this.departures_manager = new DeparturesManager(station.code);
+            this.departures = null;
+
             this.departures_table_container_el = document.getElementById('departures-table-container'); 
             this.departures_loader_el = document.getElementById('departures-loader');
             this.departures_not_available_el = document.getElementById('departures-not-available');
             this.departures_no_connection = document.getElementById('departures-no-connection');
             this.departures_table_loader_el = document.getElementById('departures-table-loader');
             this.departures_table_no_connection_el = document.getElementById('departures-table-no-connection');
-            this.departures = null;
+
         }
 
         DeparturesView.prototype.activate = function() {
@@ -180,4 +183,3 @@ define(
 
     }
 );
-

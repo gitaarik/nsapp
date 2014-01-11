@@ -58,6 +58,7 @@ define(
 
             this.windowFocusEvent = function() {
                 that.input_el.focus();
+                that.searchTermUpdatedDelegate(that.input_el.value);
             };
 
             this.input_el.addEventListener('keyup', this.keyupEvent);
