@@ -48,10 +48,20 @@ define(
 
         SearchStationsResults.prototype.handleStationListClick = function(event) {
 
-            if (event.target.className == 'station-option') {
-                this.openStationDelegate(event.target.station);
+            var class_name = event.target.className;
+            var station = event.target.station;
+
+            if (['station-option', 'name'].indexOfclass_name) > -1) {
+                this.openStationDelegate(station);
+            } else if (class_name == 'favorite') {
+                this.addStationToFavorites(station);
             }
 
+        };
+
+        SearchStationsResults.prototype.addStationToFavorites = function(stations) {
+            // make star bright
+            // call addstationToFavoritesDelegate
         };
 
         SearchStationsResults.prototype.updateStations = function(stations) {
