@@ -1,7 +1,7 @@
 NS App
 ======
 
-A mobile webapp for looking up the traintimes of the NS (Dutch Railways).
+A mobile webapp for looking up the departure times of the NS (Dutch Railways).
 
 Preview at:
 http://nsapp.televisionsmostpopularartinstructors.com/
